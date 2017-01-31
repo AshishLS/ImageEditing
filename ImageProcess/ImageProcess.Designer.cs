@@ -1,6 +1,6 @@
 ﻿namespace ImageProcess
 {
-    partial class Form1
+    partial class ImageProcess
     {
         /// <summary>
         /// Required designer variable.
@@ -29,11 +29,12 @@
         private void InitializeComponent()
         {
             this.btnStartProcess = new System.Windows.Forms.Button();
-            this.tbxCurrentDirectory = new System.Windows.Forms.TextBox();
             this.lblImageDirectory = new System.Windows.Forms.Label();
             this.lblBaseDirectory = new System.Windows.Forms.Label();
-            this.tbxBaseDirectory = new System.Windows.Forms.TextBox();
             this.prBarFileProcessed = new System.Windows.Forms.ProgressBar();
+            this.lblStatus = new System.Windows.Forms.Label();
+            this.tbxBaseDirectory = new System.Windows.Forms.TextBox();
+            this.tbxCurrentDirectory = new System.Windows.Forms.TextBox();
             this.SuspendLayout();
             // 
             // btnStartProcess
@@ -45,13 +46,6 @@
             this.btnStartProcess.Text = "Start Process";
             this.btnStartProcess.UseVisualStyleBackColor = true;
             this.btnStartProcess.Click += new System.EventHandler(this.btnStartProcess_Click);
-            // 
-            // tbxCurrentDirectory
-            // 
-            this.tbxCurrentDirectory.Location = new System.Drawing.Point(112, 12);
-            this.tbxCurrentDirectory.Name = "tbxCurrentDirectory";
-            this.tbxCurrentDirectory.Size = new System.Drawing.Size(388, 20);
-            this.tbxCurrentDirectory.TabIndex = 1;
             // 
             // lblImageDirectory
             // 
@@ -71,13 +65,6 @@
             this.lblBaseDirectory.TabIndex = 4;
             this.lblBaseDirectory.Text = "Base Directory";
             // 
-            // tbxBaseDirectory
-            // 
-            this.tbxBaseDirectory.Location = new System.Drawing.Point(112, 38);
-            this.tbxBaseDirectory.Name = "tbxBaseDirectory";
-            this.tbxBaseDirectory.Size = new System.Drawing.Size(388, 20);
-            this.tbxBaseDirectory.TabIndex = 3;
-            // 
             // prBarFileProcessed
             // 
             this.prBarFileProcessed.Location = new System.Drawing.Point(112, 73);
@@ -85,19 +72,45 @@
             this.prBarFileProcessed.Size = new System.Drawing.Size(388, 16);
             this.prBarFileProcessed.TabIndex = 5;
             // 
-            // Form1
+            // lblStatus
+            // 
+            this.lblStatus.AutoSize = true;
+            this.lblStatus.Font = new System.Drawing.Font("Microsoft Sans Serif", 12F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.lblStatus.Location = new System.Drawing.Point(13, 73);
+            this.lblStatus.Name = "lblStatus";
+            this.lblStatus.Size = new System.Drawing.Size(0, 20);
+            this.lblStatus.TabIndex = 6;
+            // 
+            // tbxBaseDirectory
+            // 
+            this.tbxBaseDirectory.Location = new System.Drawing.Point(112, 38);
+            this.tbxBaseDirectory.Name = "tbxBaseDirectory";
+            this.tbxBaseDirectory.Size = new System.Drawing.Size(388, 20);
+            this.tbxBaseDirectory.TabIndex = 3;
+            this.tbxBaseDirectory.Text = global::ImageProcess.Properties.Settings.Default.BaseDir;
+            // 
+            // tbxCurrentDirectory
+            // 
+            this.tbxCurrentDirectory.Location = new System.Drawing.Point(112, 12);
+            this.tbxCurrentDirectory.Name = "tbxCurrentDirectory";
+            this.tbxCurrentDirectory.Size = new System.Drawing.Size(388, 20);
+            this.tbxCurrentDirectory.TabIndex = 1;
+            this.tbxCurrentDirectory.Text = global::ImageProcess.Properties.Settings.Default.CurrentDir;
+            // 
+            // ImageProcess
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             this.ClientSize = new System.Drawing.Size(534, 149);
+            this.Controls.Add(this.lblStatus);
             this.Controls.Add(this.prBarFileProcessed);
             this.Controls.Add(this.lblBaseDirectory);
             this.Controls.Add(this.tbxBaseDirectory);
             this.Controls.Add(this.lblImageDirectory);
             this.Controls.Add(this.tbxCurrentDirectory);
             this.Controls.Add(this.btnStartProcess);
-            this.Name = "Form1";
-            this.Text = "Form1";
+            this.Name = "ImageProcess";
+            this.Text = "Image Resize";
             this.ResumeLayout(false);
             this.PerformLayout();
 
@@ -111,6 +124,7 @@
         private System.Windows.Forms.Label lblBaseDirectory;
         private System.Windows.Forms.TextBox tbxBaseDirectory;
         private System.Windows.Forms.ProgressBar prBarFileProcessed;
+        private System.Windows.Forms.Label lblStatus;
     }
 }
 

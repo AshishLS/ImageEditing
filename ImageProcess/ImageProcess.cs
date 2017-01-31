@@ -12,9 +12,9 @@ using System.IO;
 
 namespace ImageProcess
 {
-    public partial class Form1 : Form
+    public partial class ImageProcess : Form
     {
-        public Form1()
+        public ImageProcess()
         {
             InitializeComponent();
         }
@@ -25,6 +25,17 @@ namespace ImageProcess
                 return;
             // Initialize.
             prBarFileProcessed.Value = 0;
+            lblStatus.Text = "";
+            this.BackColor = Color.LightGray;
+
+            // Check how it remembers last paths. Added Settings.
+            // https://msdn.microsoft.com/en-us/library/25zf0ze8(v=vs.100).aspx
+            // http://stackoverflow.com/questions/453161/best-practice-to-save-application-settings-in-a-windows-forms-application
+
+            Properties.Settings.Default.BaseDir = tbxBaseDirectory.Text;
+            Properties.Settings.Default.CurrentDir = tbxCurrentDirectory.Text;
+            Properties.Settings.Default.Save();
+
 
             Directory.CreateDirectory(tbxCurrentDirectory.Text + "\\Results\\");
 
@@ -50,6 +61,10 @@ namespace ImageProcess
 
                     // save the newly generated files in Results Folder.
                     reducedImage.Save(fileInfo.DirectoryName + "\\Results\\" + fileInfo.Name);
+
+                    // dispose.
+                    reducedImage.Dispose();
+                    baseImg.Dispose();
                 }
                 else
                 {
@@ -59,9 +74,15 @@ namespace ImageProcess
                 // update progress bar
                 count++;
                 prBarFileProcessed.Value = count;
+                lblStatus.Text = String.Format("{0}/{1}", count, prBarFileProcessed.Maximum);
+                lblStatus.Update();
+
+                // dispose.
+                currentImg.Dispose();
             }
 
             count = 0;
+            this.BackColor = Color.LightSeaGreen;
         }
     }
 }
