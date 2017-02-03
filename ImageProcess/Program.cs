@@ -14,6 +14,10 @@ namespace ImageProcess
         [STAThread]
         static void Main()
         {
+            // From OpenCV projects
+            Application.EnableVisualStyles();
+            Application.SetCompatibleTextRenderingDefault(false);
+
             Application.EnableVisualStyles();
             Application.SetCompatibleTextRenderingDefault(false);
             Application.Run(new ImageProcess());

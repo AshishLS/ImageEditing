@@ -1,13 +1,5 @@
-*.cache
-ImageProcess/obj/Debug/ImageProcess.csproj.FileListAbsolute.txt
-*.resources
-ImageProcess/obj/Debug/ImageProcess.exe
-*.exe
-ImageProcess/bin/Debug/ImageProcess.exe.config
 *.pdb
-ImageProcess/bin/Debug/ImageProcess.vshost.exe.config
+ImageProcess/bin/
+ImageProcess/obj/
 *.manifest
-ImageProcess/obj/Debug/TemporaryGeneratedFile_036C0B5B-1481-4323-8D20-8F5ADCB23D92.cs
-ImageProcess/obj/Debug/TemporaryGeneratedFile_5937a670-0e60-4077-877b-f7221da3dda1.cs
-ImageProcess/obj/Debug/TemporaryGeneratedFile_E7A71F73-0F8D-4B9B-B56E-8E70B10BC5D3.cs
 *.suo

@@ -35,6 +35,10 @@
             this.lblStatus = new System.Windows.Forms.Label();
             this.tbxBaseDirectory = new System.Windows.Forms.TextBox();
             this.tbxCurrentDirectory = new System.Windows.Forms.TextBox();
+            this.pBxResultImage = new System.Windows.Forms.PictureBox();
+            this.trvPercentageDivision = new System.Windows.Forms.TreeView();
+            this.lblSelectedImage = new System.Windows.Forms.Label();
+            ((System.ComponentModel.ISupportInitialize)(this.pBxResultImage)).BeginInit();
             this.SuspendLayout();
             // 
             // btnStartProcess
@@ -50,7 +54,7 @@
             // lblImageDirectory
             // 
             this.lblImageDirectory.AutoSize = true;
-            this.lblImageDirectory.Location = new System.Drawing.Point(13, 18);
+            this.lblImageDirectory.Location = new System.Drawing.Point(13, 38);
             this.lblImageDirectory.Name = "lblImageDirectory";
             this.lblImageDirectory.Size = new System.Drawing.Size(86, 13);
             this.lblImageDirectory.TabIndex = 2;
@@ -59,7 +63,7 @@
             // lblBaseDirectory
             // 
             this.lblBaseDirectory.AutoSize = true;
-            this.lblBaseDirectory.Location = new System.Drawing.Point(13, 44);
+            this.lblBaseDirectory.Location = new System.Drawing.Point(13, 12);
             this.lblBaseDirectory.Name = "lblBaseDirectory";
             this.lblBaseDirectory.Size = new System.Drawing.Size(76, 13);
             this.lblBaseDirectory.TabIndex = 4;
@@ -83,7 +87,7 @@
             // 
             // tbxBaseDirectory
             // 
-            this.tbxBaseDirectory.Location = new System.Drawing.Point(112, 38);
+            this.tbxBaseDirectory.Location = new System.Drawing.Point(112, 6);
             this.tbxBaseDirectory.Name = "tbxBaseDirectory";
             this.tbxBaseDirectory.Size = new System.Drawing.Size(388, 20);
             this.tbxBaseDirectory.TabIndex = 3;
@@ -91,17 +95,46 @@
             // 
             // tbxCurrentDirectory
             // 
-            this.tbxCurrentDirectory.Location = new System.Drawing.Point(112, 12);
+            this.tbxCurrentDirectory.Location = new System.Drawing.Point(112, 32);
             this.tbxCurrentDirectory.Name = "tbxCurrentDirectory";
             this.tbxCurrentDirectory.Size = new System.Drawing.Size(388, 20);
             this.tbxCurrentDirectory.TabIndex = 1;
             this.tbxCurrentDirectory.Text = global::ImageProcess.Properties.Settings.Default.CurrentDir;
             // 
+            // pBxResultImage
+            // 
+            this.pBxResultImage.Location = new System.Drawing.Point(271, 133);
+            this.pBxResultImage.Name = "pBxResultImage";
+            this.pBxResultImage.Size = new System.Drawing.Size(510, 438);
+            this.pBxResultImage.TabIndex = 7;
+            this.pBxResultImage.TabStop = false;
+            // 
+            // trvPercentageDivision
+            // 
+            this.trvPercentageDivision.Location = new System.Drawing.Point(16, 133);
+            this.trvPercentageDivision.Name = "trvPercentageDivision";
+            this.trvPercentageDivision.Size = new System.Drawing.Size(221, 438);
+            this.trvPercentageDivision.TabIndex = 9;
+            this.trvPercentageDivision.AfterSelect += new System.Windows.Forms.TreeViewEventHandler(this.clickOnTreeNode);
+            // 
+            // lblSelectedImage
+            // 
+            this.lblSelectedImage.AutoSize = true;
+            this.lblSelectedImage.Font = new System.Drawing.Font("Microsoft Sans Serif", 9.75F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.lblSelectedImage.Location = new System.Drawing.Point(484, 104);
+            this.lblSelectedImage.Name = "lblSelectedImage";
+            this.lblSelectedImage.Size = new System.Drawing.Size(87, 16);
+            this.lblSelectedImage.TabIndex = 10;
+            this.lblSelectedImage.Text = "Selected File";
+            // 
             // ImageProcess
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
-            this.ClientSize = new System.Drawing.Size(534, 149);
+            this.ClientSize = new System.Drawing.Size(1470, 614);
+            this.Controls.Add(this.lblSelectedImage);
+            this.Controls.Add(this.trvPercentageDivision);
+            this.Controls.Add(this.pBxResultImage);
             this.Controls.Add(this.lblStatus);
             this.Controls.Add(this.prBarFileProcessed);
             this.Controls.Add(this.lblBaseDirectory);
@@ -111,6 +144,7 @@
             this.Controls.Add(this.btnStartProcess);
             this.Name = "ImageProcess";
             this.Text = "Image Resize";
+            ((System.ComponentModel.ISupportInitialize)(this.pBxResultImage)).EndInit();
             this.ResumeLayout(false);
             this.PerformLayout();
 
@@ -125,6 +159,9 @@
         private System.Windows.Forms.TextBox tbxBaseDirectory;
         private System.Windows.Forms.ProgressBar prBarFileProcessed;
         private System.Windows.Forms.Label lblStatus;
+        private System.Windows.Forms.PictureBox pBxResultImage;
+        private System.Windows.Forms.TreeView trvPercentageDivision;
+        private System.Windows.Forms.Label lblSelectedImage;
     }
 }
 
