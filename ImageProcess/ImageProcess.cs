@@ -188,6 +188,8 @@ namespace ImageProcess
                 MessageBox.Show("Invalid Comparison Data File.");
                 return;
             }
+            // Clean the existing tree first
+            trvPercentageDivision.Nodes.Clear();
 
             StreamReader readerStream = File.OpenText(comparisonDatafile);
 
@@ -202,8 +204,6 @@ namespace ImageProcess
                 treeNode.BackColor = color;
                 // Add the matchInfo as a Tag on the tree node as well.
                 treeNode.Tag = matchInfo;
-
-
             }
             readerStream.Close();
         }
@@ -228,15 +228,25 @@ namespace ImageProcess
         private void clickOnTreeNode(object sender, TreeViewEventArgs e)
         {
             var treeNode = e.Node;
-            //var matchInfo = JsonConvert.DeserializeObject<MatchInfo>((string)treeNode.Tag);
-            //debug
-            //MessageBox.Show(matchInfo.ComparisonImagePath);
-
             Bitmap bitMap = new Bitmap(((MatchInfo)treeNode.Tag).ComparisonImagePath);
             pBxResultImage.Size = bitMap.Size;
             pBxResultImage.Image = bitMap;
             pBxResultImage.Update();
             lblSelectedImage.Text = treeNode.Tag.ToString();
+        }
+
+        private void btnExistingData_Click(object sender, EventArgs e)
+        {
+            OpenFileDialog fileOpenDia = new OpenFileDialog();
+
+            fileOpenDia.Title = "Open Comparison Data File.";
+            fileOpenDia.Filter = "TXT files|*.txt";
+            fileOpenDia.InitialDirectory = @"C:\";
+            if (fileOpenDia.ShowDialog() == DialogResult.OK)
+            {
+                this.comparisonDatafile = fileOpenDia.FileName;
+                ShowDataInComparisonFileAsTreeView();
+            }
         }
     }
 }

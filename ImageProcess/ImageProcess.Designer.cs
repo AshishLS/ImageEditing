@@ -38,6 +38,7 @@
             this.pBxResultImage = new System.Windows.Forms.PictureBox();
             this.trvPercentageDivision = new System.Windows.Forms.TreeView();
             this.lblSelectedImage = new System.Windows.Forms.Label();
+            this.btnExistingData = new System.Windows.Forms.Button();
             ((System.ComponentModel.ISupportInitialize)(this.pBxResultImage)).BeginInit();
             this.SuspendLayout();
             // 
@@ -127,11 +128,22 @@
             this.lblSelectedImage.TabIndex = 10;
             this.lblSelectedImage.Text = "Selected File";
             // 
+            // btnExistingData
+            // 
+            this.btnExistingData.Location = new System.Drawing.Point(162, 133);
+            this.btnExistingData.Name = "btnExistingData";
+            this.btnExistingData.Size = new System.Drawing.Size(75, 23);
+            this.btnExistingData.TabIndex = 11;
+            this.btnExistingData.Text = "Import";
+            this.btnExistingData.UseVisualStyleBackColor = true;
+            this.btnExistingData.Click += new System.EventHandler(this.btnExistingData_Click);
+            // 
             // ImageProcess
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             this.ClientSize = new System.Drawing.Size(1470, 614);
+            this.Controls.Add(this.btnExistingData);
             this.Controls.Add(this.lblSelectedImage);
             this.Controls.Add(this.trvPercentageDivision);
             this.Controls.Add(this.pBxResultImage);
@@ -162,6 +174,7 @@
         private System.Windows.Forms.PictureBox pBxResultImage;
         private System.Windows.Forms.TreeView trvPercentageDivision;
         private System.Windows.Forms.Label lblSelectedImage;
+        private System.Windows.Forms.Button btnExistingData;
     }
 }
 
