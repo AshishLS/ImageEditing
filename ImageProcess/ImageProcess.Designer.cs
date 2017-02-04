@@ -39,18 +39,20 @@
             this.trvPercentageDivision = new System.Windows.Forms.TreeView();
             this.lblSelectedImage = new System.Windows.Forms.Label();
             this.btnExistingData = new System.Windows.Forms.Button();
+            this.btnMatch = new System.Windows.Forms.Button();
+            this.cbxMatchWithResized = new System.Windows.Forms.CheckBox();
             ((System.ComponentModel.ISupportInitialize)(this.pBxResultImage)).BeginInit();
             this.SuspendLayout();
             // 
             // btnStartProcess
             // 
-            this.btnStartProcess.Location = new System.Drawing.Point(227, 104);
+            this.btnStartProcess.Location = new System.Drawing.Point(144, 97);
             this.btnStartProcess.Name = "btnStartProcess";
             this.btnStartProcess.Size = new System.Drawing.Size(75, 23);
             this.btnStartProcess.TabIndex = 0;
-            this.btnStartProcess.Text = "Start Process";
+            this.btnStartProcess.Text = "Resize";
             this.btnStartProcess.UseVisualStyleBackColor = true;
-            this.btnStartProcess.Click += new System.EventHandler(this.btnStartProcess_Click);
+            this.btnStartProcess.Click += new System.EventHandler(this.btnResizeCurrentImages_Click);
             // 
             // lblImageDirectory
             // 
@@ -72,7 +74,7 @@
             // 
             // prBarFileProcessed
             // 
-            this.prBarFileProcessed.Location = new System.Drawing.Point(112, 73);
+            this.prBarFileProcessed.Location = new System.Drawing.Point(112, 58);
             this.prBarFileProcessed.Name = "prBarFileProcessed";
             this.prBarFileProcessed.Size = new System.Drawing.Size(388, 16);
             this.prBarFileProcessed.TabIndex = 5;
@@ -138,11 +140,35 @@
             this.btnExistingData.UseVisualStyleBackColor = true;
             this.btnExistingData.Click += new System.EventHandler(this.btnExistingData_Click);
             // 
+            // btnMatch
+            // 
+            this.btnMatch.Location = new System.Drawing.Point(319, 97);
+            this.btnMatch.Name = "btnMatch";
+            this.btnMatch.Size = new System.Drawing.Size(75, 23);
+            this.btnMatch.TabIndex = 12;
+            this.btnMatch.Text = "Match";
+            this.btnMatch.UseVisualStyleBackColor = true;
+            this.btnMatch.Click += new System.EventHandler(this.btnMatch_Click);
+            // 
+            // cbxMatchWithResized
+            // 
+            this.cbxMatchWithResized.AutoSize = true;
+            this.cbxMatchWithResized.Checked = true;
+            this.cbxMatchWithResized.CheckState = System.Windows.Forms.CheckState.Checked;
+            this.cbxMatchWithResized.Location = new System.Drawing.Point(319, 80);
+            this.cbxMatchWithResized.Name = "cbxMatchWithResized";
+            this.cbxMatchWithResized.Size = new System.Drawing.Size(159, 17);
+            this.cbxMatchWithResized.TabIndex = 13;
+            this.cbxMatchWithResized.Text = "Match With Resized Images";
+            this.cbxMatchWithResized.UseVisualStyleBackColor = true;
+            // 
             // ImageProcess
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             this.ClientSize = new System.Drawing.Size(1470, 614);
+            this.Controls.Add(this.cbxMatchWithResized);
+            this.Controls.Add(this.btnMatch);
             this.Controls.Add(this.btnExistingData);
             this.Controls.Add(this.lblSelectedImage);
             this.Controls.Add(this.trvPercentageDivision);
@@ -175,6 +201,8 @@
         private System.Windows.Forms.TreeView trvPercentageDivision;
         private System.Windows.Forms.Label lblSelectedImage;
         private System.Windows.Forms.Button btnExistingData;
+        private System.Windows.Forms.Button btnMatch;
+        private System.Windows.Forms.CheckBox cbxMatchWithResized;
     }
 }
 

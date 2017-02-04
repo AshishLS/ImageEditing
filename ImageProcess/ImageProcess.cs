@@ -17,6 +17,7 @@ namespace ImageProcess
     public partial class ImageProcess : Form
     {
         string comparisonDatafile;
+        bool compareWithResized = false;
 
         public struct MatchInfo
         {
@@ -24,15 +25,16 @@ namespace ImageProcess
             public string ComparisonImagePath;
             public override string ToString()
             {
-                return String.Format("Different by = {0}% \nPath - {1}", Percetange, ComparisonImagePath);
+                return String.Format("Similarity by = {0}% \nPath - {1}", Percetange, ComparisonImagePath);
             }
         }
         public ImageProcess()
         {
             InitializeComponent();
+            compareWithResized = false;
         }
 
-        private void btnStartProcess_Click(object sender, EventArgs e)
+        private void btnResizeCurrentImages_Click(object sender, EventArgs e)
         {
             if (!Directory.Exists(tbxCurrentDirectory.Text) || !Directory.Exists(tbxBaseDirectory.Text))
                 return;
@@ -96,6 +98,13 @@ namespace ImageProcess
 
             count = 0;
             this.BackColor = Color.LightSeaGreen;
+
+            // Since user has chosen to resize images, match with resized images.
+            compareWithResized = true;
+        }
+
+        private void btnMatch_Click(object sender, EventArgs e)
+        {
             // Test matches
             MatchImages();
         }
@@ -108,7 +117,12 @@ namespace ImageProcess
             lblStatus.Text = "";
             this.BackColor = Color.Yellow;
 
-            var resizedImgsDirInfo = Directory.CreateDirectory(tbxCurrentDirectory.Text + "\\Results");
+            DirectoryInfo sampleImgsDirInfo = null;
+            if(cbxMatchWithResized.Checked)
+                sampleImgsDirInfo = Directory.CreateDirectory(tbxCurrentDirectory.Text + "\\Results");
+            else
+                sampleImgsDirInfo = Directory.CreateDirectory(tbxCurrentDirectory.Text);
+
             var analysedImgsDirInfo = Directory.CreateDirectory(tbxCurrentDirectory.Text + "\\Analyzed");
             // Also create the comparison data file which we can use later.
             comparisonDatafile = String.Format("{0}\\ComparisonData{1}.txt",analysedImgsDirInfo.FullName, DateTime.Now.ToFileTimeUtc());
@@ -122,13 +136,13 @@ namespace ImageProcess
             foreach (var baseLineFile in baseDirFiles)
             {
                 var baseFileInfo = new FileInfo(baseLineFile);
-                var resizedDirImageName = resizedImgsDirInfo.FullName + "\\" + baseFileInfo.Name;
+                var sampleDirImageName = sampleImgsDirInfo.FullName + "\\" + baseFileInfo.Name;
 
-                if (File.Exists(resizedDirImageName))
+                if (File.Exists(sampleDirImageName))
                 {
                     // Testing-
                     Bitmap resultImg;
-                    double percentage = EmguOpenCVMagic.DrawMatches.MatchImages(baseLineFile, resizedDirImageName, out resultImg);
+                    double percentage = EmguOpenCVMagic.DrawMatches.MatchImages(sampleDirImageName, baseLineFile, out resultImg);
                     if (resultImg != null)
                     {
                         percentage = Math.Round(percentage, 2);
@@ -150,7 +164,7 @@ namespace ImageProcess
                 }
                 else
                 {
-                    Console.WriteLine(String.Format("File {0} is not available in base directory.", resizedDirImageName));
+                    Console.WriteLine(String.Format("File {0} is not available in base directory.", sampleDirImageName));
                 }
 
                 // update progress bar
@@ -211,16 +225,48 @@ namespace ImageProcess
         private Color getColorBasedOnPercentage(double percentage)
         {
             Color returnColor = Color.Green;
-            if (percentage >= 80.0)
-                returnColor = Color.Red;
-            else if (percentage >= 60.0)
-                returnColor = Color.Orange;
-            else if (percentage >= 40.0)
-                returnColor = Color.Yellow;
-            else if (percentage >= 20.0)
-                returnColor = Color.GreenYellow;
-            else if (percentage >= 0.0)
+            //if (percentage >= 80.0)
+            //    returnColor = Color.Red;
+            //else if (percentage >= 60.0)
+            //    returnColor = Color.Orange;
+            //else if (percentage >= 40.0)
+            //    returnColor = Color.Yellow;
+            //else if (percentage >= 20.0)
+            //    returnColor = Color.GreenYellow;
+            //else if (percentage >= 0.0)
+            //    returnColor = Color.ForestGreen;
+
+            // When match points are compared against key points.
+            //if (percentage >= 30.0)
+            //    returnColor = Color.ForestGreen;
+            //else if (percentage >= 25.0)
+            //    returnColor = Color.Green;
+            //else if (percentage >= 20.0)
+            //    returnColor = Color.GreenYellow;
+            //else if (percentage >= 15.0)
+            //    returnColor = Color.Yellow;
+            //else if (percentage >= 5.0)
+            //    returnColor = Color.Orange;
+            //else if (percentage >= 1.0)
+            //    returnColor = Color.Red;
+            //else
+            //    returnColor = Color.DarkRed;
+
+            // When rectangle diagonal distance compared
+            if (percentage >= 95.0)
                 returnColor = Color.ForestGreen;
+            else if (percentage >= 90.0)
+                returnColor = Color.Green;
+            else if (percentage >= 75.0)
+                returnColor = Color.GreenYellow;
+            else if (percentage >= 50.0)
+                returnColor = Color.Yellow;
+            else if (percentage >= 25.0)
+                returnColor = Color.Orange;
+            else if (percentage >= 10.0)
+                returnColor = Color.Red;
+            else
+                returnColor = Color.DarkRed;
 
             return returnColor;
         }
