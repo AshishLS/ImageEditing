@@ -108,7 +108,7 @@ namespace EmguOpenCVMagic
             {
                 throw e;
             }
-            
+
             matchTime = watch.ElapsedMilliseconds;
         }
 
@@ -131,21 +131,34 @@ namespace EmguOpenCVMagic
                 FindMatch(modelImage, observedImage, out matchTime, out modelKeyPoints, out observedKeyPoints, matches,
                    out mask, out homography);
 
-                var difference = Math.Abs(modelKeyPoints.Size - observedKeyPoints.Size);
-                if (modelKeyPoints.Size > 0)
-                {
-                    matchPercentage = 100.0 * ((double)difference / (double)modelKeyPoints.Size);
-                    //MessageBox.Show(String.Format("The images are {0}% different", matchPercentage));
-                }
-                else
-                {
-                    MessageBox.Show(String.Format("No keypoints in model image. Must be a blank image"));
-                }
+                //// Ashish>> http://stackoverflow.com/questions/36269038/emgu-cv-surf-get-matched-points-coordinates
+                //// In findMatch, each pair of point is validated using VoteForUniqueness to tell whether the points are macting.
+                //// The results are stored in mask. We will check whether the match is validated or not to get the count of matches.
+                //int matchCount = 0;
+                //for (int i = 0; i < matches.Size; i++)
+                //{
+                //    if (mask.GetData(i)[0] == 0)
+                //        continue;
+                //    matchCount++;
+                //}
+
+                //// We will check whether in our model image has as many macthpoints as observedKeyPoints.
+                //// This way we can tell the percentage of how much is modelImage present in the observedImage.
+                //if (modelKeyPoints.Size > 0)
+                //{
+                //    matchPercentage = 100.0 * ((double)matchCount / (double)observedKeyPoints.Size);
+                //    //MessageBox.Show(String.Format("The images are {0}% Similar. \nMatchPoints - {1} \nCurrentKeyPoints - {2} ", matchPercentage, matchCount, modelKeyPoints.Size));
+                //}
+                //else
+                //{
+                //    //MessageBox.Show(String.Format("No keypoints in model image. Must be a blank image"));
+                //}
+                //// << Ashish
 
                 //Draw the matched keypoints
                 Mat result = new Mat();
                 Features2DToolbox.DrawMatches(modelImage, modelKeyPoints, observedImage, observedKeyPoints,
-                   matches, result, new MCvScalar(255, 255, 255), new MCvScalar(255, 255, 255), mask);
+                   matches, result, new MCvScalar(255, 255, 200), new MCvScalar(255, 200, 255), mask);
 
                 #region draw the projected region on the image
 
@@ -155,12 +168,63 @@ namespace EmguOpenCVMagic
                     Rectangle rect = new Rectangle(Point.Empty, modelImage.Size);
                     PointF[] pts = new PointF[]
                     {
-                  new PointF(rect.Left, rect.Bottom),
-                  new PointF(rect.Right, rect.Bottom),
-                  new PointF(rect.Right, rect.Top),
-                  new PointF(rect.Left, rect.Top)
+                        //       3 __________________ 2
+                        //        |                  |
+                        //        |                  |
+                        //        |                  |
+                        //        |                  |
+                        //       0 ------------------ 1
+                      new PointF(rect.Left, rect.Bottom), // 0 bottom left
+                      new PointF(rect.Right, rect.Bottom), // 1 bottom right
+                      new PointF(rect.Right, rect.Top), // 2 top right
+                      new PointF(rect.Left, rect.Top) // 3 top left
                     };
                     pts = CvInvoke.PerspectiveTransform(pts, homography);
+
+                    // Now the transformed image, if is closely macthed with all the 4 corners of the observed image, we can say
+                    // that model image and observed images are same. We should decide the percentage based on corner lengths. >>Ashish
+                    // Rectangle along the Base/ Observed Image.
+                    Rectangle rectangle = new Rectangle(Point.Empty, observedImage.Size);
+                    // distance formula to calculate the diagonal distance.
+                    double image_diagonalDist = getDistance(rectangle.Left, rectangle.Bottom, rectangle.Right, rectangle.Top);
+
+                    //// projected rectangle diagonal distances.
+                    //double projected_bottomLeftToTopRight = Math.Sqrt((pts[2].X - pts[0].X) * (pts[2].X - pts[0].X) 
+                    //                                                + (pts[2].Y - pts[0].Y) * (pts[2].Y - pts[0].Y));
+                    //double error_fraction_bottomLeftToTopRight = Math.Abs(image_diagonalDist - projected_bottomLeftToTopRight) / image_diagonalDist;
+
+                    //double projected_TopLeftTobottomRight = Math.Sqrt((pts[3].X - pts[1].X) * (pts[3].X - pts[1].X) + 
+                    //                                                  (pts[3].Y - pts[1].Y) * (pts[3].Y - pts[1].Y));
+                    //double error_fraction_TopLeftTobottomRight = Math.Abs(image_diagonalDist - projected_TopLeftTobottomRight) / image_diagonalDist;
+
+                    //double avg_error_fraction = (error_fraction_TopLeftTobottomRight + error_fraction_bottomLeftToTopRight) * 0.5;
+
+                    //matchPercentage = (1.0 - avg_error_fraction) * 100.0;
+
+                    // Corner point distances of the projected rectangle from the original corner points.
+
+                    double dist_bottomLeft = getDistance(rectangle.Left, rectangle.Bottom, pts[0].X, pts[0].Y);
+                    double error_percentage_dist_bottomLeft = (image_diagonalDist - dist_bottomLeft) / image_diagonalDist;
+
+
+                    double dist_bottomRight = getDistance(rectangle.Right, rectangle.Bottom, pts[1].X, pts[1].Y);
+                    double error_percetange_dist_bottomRight = (image_diagonalDist - dist_bottomRight) / image_diagonalDist;
+
+
+                    double dist_topRight = getDistance(rectangle.Right, rectangle.Top, pts[2].X, pts[2].Y);
+                    double error_percentage_dist_topRight = (image_diagonalDist - dist_topRight) / image_diagonalDist;
+
+
+                    double dist_topLeft = getDistance(rectangle.Left, rectangle.Top, pts[3].X, pts[3].Y);
+                    double error_percentage_dist_topLeft = (image_diagonalDist - dist_topLeft) / image_diagonalDist;
+
+                    double avg_percentage_error = 0.25 * (error_percentage_dist_bottomLeft + error_percetange_dist_bottomRight +
+                                                            error_percentage_dist_topRight + error_percentage_dist_topLeft);
+
+                    matchPercentage = (avg_percentage_error) * 100.0;
+
+                    // >>Ashish
+
 
 #if NETFX_CORE
                Point[] points = Extensions.ConvertAll<PointF, Point>(pts, Point.Round);
@@ -177,6 +241,15 @@ namespace EmguOpenCVMagic
                 return result;
 
             }
+        }
+
+        private static double getDistance(double X1, double Y1, double X2, double Y2)
+        {
+            double Xdistance = X1 - X2;
+            double Ydistance = Y1 - Y2;
+
+            double distace = Math.Sqrt((Xdistance * Xdistance) + (Ydistance * Ydistance));
+            return distace;
         }
     }
 }
