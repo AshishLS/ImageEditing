@@ -14,4 +14,3 @@ C:\Users\Ashish\Dropbox\ImageEditing\ImageEditing\EmguOpenCVMagic\bin\Debug\Emgu
 C:\Users\Ashish\Dropbox\ImageEditing\ImageEditing\EmguOpenCVMagic\bin\Debug\ZedGraph.xml
 C:\Users\Ashish\Dropbox\ImageEditing\ImageEditing\EmguOpenCVMagic\bin\Debug\zh-CN\Emgu.CV.UI.resources.dll
 C:\Users\Ashish\Dropbox\ImageEditing\ImageEditing\EmguOpenCVMagic\bin\Debug\zh-CN\ZedGraph.resources.dll
-C:\Users\Ashish\Dropbox\ImageEditing\ImageEditing\EmguOpenCVMagic\obj\Debug\EmguOpenCVMagic.csprojResolveAssemblyReference.cache

@@ -116,7 +116,7 @@
             // 
             this.trvPercentageDivision.Location = new System.Drawing.Point(16, 133);
             this.trvPercentageDivision.Name = "trvPercentageDivision";
-            this.trvPercentageDivision.Size = new System.Drawing.Size(221, 438);
+            this.trvPercentageDivision.Size = new System.Drawing.Size(221, 615);
             this.trvPercentageDivision.TabIndex = 9;
             this.trvPercentageDivision.AfterSelect += new System.Windows.Forms.TreeViewEventHandler(this.clickOnTreeNode);
             // 
@@ -124,7 +124,7 @@
             // 
             this.lblSelectedImage.AutoSize = true;
             this.lblSelectedImage.Font = new System.Drawing.Font("Microsoft Sans Serif", 9.75F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.lblSelectedImage.Location = new System.Drawing.Point(484, 104);
+            this.lblSelectedImage.Location = new System.Drawing.Point(552, 58);
             this.lblSelectedImage.Name = "lblSelectedImage";
             this.lblSelectedImage.Size = new System.Drawing.Size(87, 16);
             this.lblSelectedImage.TabIndex = 10;
@@ -166,7 +166,7 @@
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
-            this.ClientSize = new System.Drawing.Size(1470, 614);
+            this.ClientSize = new System.Drawing.Size(1853, 790);
             this.Controls.Add(this.cbxMatchWithResized);
             this.Controls.Add(this.btnMatch);
             this.Controls.Add(this.btnExistingData);
